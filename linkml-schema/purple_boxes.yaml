@@ -1,8 +1,10 @@
 name: kb-model
 id: https://identifiers.org/brain-bican/kb-model
+
 imports:
 - linkml:types
 - bican_biolink
+
 prefixes:
   linkml: https://w3id.org/linkml/
   bican: https://identifiers.org/brain-bican/vocab/
