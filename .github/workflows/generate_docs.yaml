@@ -32,7 +32,7 @@ jobs:
         run: |
           mkdir docs
           touch docs/.nojekyll
-          gen-doc -d docs linkml-schema/kbmodel.yaml
+          gen-doc -d docs linkml-schema/purple_boxes.yaml
 
       - name: Deploy to GitHub Pages
         run: mkdocs gh-deploy --force
