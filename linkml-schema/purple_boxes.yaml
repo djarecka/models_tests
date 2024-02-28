@@ -3,7 +3,6 @@ id: https://identifiers.org/brain-bican/kb-model
 imports:
 - linkml:types
 - bican_biolink
-
 prefixes:
   linkml: https://w3id.org/linkml/
   bican: https://identifiers.org/brain-bican/vocab/
@@ -14,6 +13,33 @@ prefixes:
 default_prefix: bican
 default_range: string
 subsets:
+  bican:
+    description: A subset of classes that are associated with BICAN.
+    from_schema: https://identifiers.org/brain-bican/kb-model
+  gars:
+    description: A subset of classes that are associated with GARS.
+    from_schema: https://identifiers.org/brain-bican/kb-model
+  tissue_specimen:
+    description: A subset of classes that are associated with tissue specimens.
+    from_schema: https://identifiers.org/brain-bican/kb-model
+  library_generation:
+    description: A subset of classes that are associated with library generation.
+    from_schema: https://identifiers.org/brain-bican/kb-model
+  sequencing_elements:
+    description: A subset of classes that are associated with sequencing.
+    from_schema: https://identifiers.org/brain-bican/kb-model
+  processing_elements:
+    description: A subset of classes that are associated with processing.
+    from_schema: https://identifiers.org/brain-bican/kb-model
+  analysis:
+    description: A subset of slots/attributes that are required for analysis.
+    from_schema: https://identifiers.org/brain-bican/kb-model
+  tracking:
+    description: A subset of slots/attributes that are required for tracking.
+    from_schema: https://identifiers.org/brain-bican/kb-model
+  alignment:
+    description: A subset of slots/attributes that are required for alignment.
+    from_schema: https://identifiers.org/brain-bican/kb-model
   bican, library_generation: {}
   bican, tissue_specimen: {}
 slots:
@@ -452,6 +478,39 @@ classes:
         - NIMP:PD-YAAGGG39
         slot_uri: e2606a11-114e-472f-9e05-33f9b6fc3089
         alias: amplified cDNA label
+    attributes:
+      quantity_ng:
+        description: Amount of cDNA produced after cDNA amplification measured in
+          nanograms.
+        in_subset:
+        - analysis
+        from_schema: https://identifiers.org/brain-bican/kb-model
+        exact_mappings:
+        - NIMP:PD-TITIIC26
+        slot_uri: 0db79d05-8612-4896-b9d3-eb1558841449
+        alias: amplified cDNA amplified quantity ng
+      pass_fail_result:
+        description: Pass or Fail result based on qualitative assessment of cDNA yield
+          and size.
+        in_subset:
+        - analysis
+        from_schema: https://identifiers.org/brain-bican/kb-model
+        exact_mappings:
+        - NIMP:PD-XXXXFQ31
+        slot_uri: bc62bdb2-7dc8-4404-bb84-ce0bbcae59e5
+        alias: amplified cDNA RNA amplification pass-fail
+      percent_cdna_ longer_than_400bp:
+        description: QC metric to measure mRNA degradation of cDNA.  Higher % is higher
+          quality starting material.  Over 400bp is used as a universal cutoff for
+          intact (full length) vs degraded cDNA and is a common output from Bioanalyzer
+          and Fragment Analyzer elecropheragrams.
+        in_subset:
+        - analysis
+        from_schema: https://identifiers.org/brain-bican/kb-model
+        exact_mappings:
+        - NIMP:PD-JJJJWD35
+        slot_uri: 8d150467-f69e-461c-b54c-bcfd22f581e5
+        alias: amplified cDNA percent cDNA longer than 400bp
   Library:
     description: A collection of fragmented and barcode-indexed DNA molecules for
       sequencing. An index or barcode is typically introduced to enable identification
@@ -709,7 +768,7 @@ classes:
         - NIMP:PD-BUBUFE27
   CellEnrichment:
     description: The process of enriching a dissociated cell sample by including or
-      excluding cells of different types based on an enrichment plan such techniques
+      excluding cells of different types based on an enrichment plan using techniques
       such as fluorescence-activated cell sorting (FACS). This process could also
       introduce a tissue-source barcode (eg cell hashing), allowing mixing of cell
       enriched samples at the cell barcoding step.
@@ -827,6 +886,34 @@ classes:
           derived from.
         from_schema: https://identifiers.org/brain-bican/kb-model
         range: BarcodedCellSample
+    attributes:
+      pcr_cycles:
+        description: Number of PCR cycles used during cDNA amplification for this
+          cDNA.
+        in_subset:
+        - analysis
+        from_schema: https://identifiers.org/brain-bican/kb-model
+        exact_mappings:
+        - NIMP:PD-OKOKQD38
+        slot_uri: 3827634c-3f8f-4760-b358-86ce4b030238
+        alias: amplified cDNA PCR cycles
+      process_date:
+        description: Date of cDNA amplification.
+        from_schema: https://identifiers.org/brain-bican/kb-model
+        exact_mappings:
+        - NIMP:PD-BYBYBY24
+        slot_uri: 6cc333e7-9b98-497f-b7b1-eae904db2400
+        alias: cDNA amplification process date
+      set:
+        description: cDNA amplification set, containing multiple amplified_cDNA_names
+          that were processed at the same time.
+        in_subset:
+        - analysis
+        from_schema: https://identifiers.org/brain-bican/kb-model
+        exact_mappings:
+        - NIMP:PD-SCSCTM41
+        slot_uri: 42e98a88-50b3-4ea2-871b-2142f6a0dfdd
+        alias: cDNA amplification set
   LibraryConstruction:
     description: The process of constructing a library from input material (such as
       amplified cDNA or barcoded cell sample) derived from one or more cell samples.  cDNA
@@ -927,6 +1014,7 @@ classes:
     slots:
     - was_generated_by
     - annotates
+    - name
     slot_usage:
       was_generated_by:
         description: The delineation process from which the dissection ROI polygon
@@ -939,80 +1027,10 @@ classes:
         exact_mappings:
         - NIMP:has_parent
         range: BrainSlab
-  DissectionROIPolygon:
-    from_schema: https://identifiers.org/brain-bican/kb-model
-    slots:
-    - name
-    slot_usage:
       name:
         description: Name of a polygon annotated on a brain slab image delineating
           a region of interest (ROI) for a tissue sample dissectioning.
         from_schema: https://identifiers.org/brain-bican/kb-model
-  AmplifiedcDNA:
-    from_schema: https://identifiers.org/brain-bican/kb-model
-    attributes:
-      quantity_ng:
-        description: Amount of cDNA produced after cDNA amplification measured in
-          nanograms.
-        in_subset:
-        - analysis
-        from_schema: https://identifiers.org/brain-bican/kb-model
-        exact_mappings:
-        - NIMP:PD-TITIIC26
-        slot_uri: 0db79d05-8612-4896-b9d3-eb1558841449
-        alias: amplified cDNA amplified quantity ng
-      pass_fail_result:
-        description: Pass or Fail result based on qualitative assessment of cDNA yield
-          and size.
-        in_subset:
-        - analysis
-        from_schema: https://identifiers.org/brain-bican/kb-model
-        exact_mappings:
-        - NIMP:PD-XXXXFQ31
-        slot_uri: bc62bdb2-7dc8-4404-bb84-ce0bbcae59e5
-        alias: amplified cDNA RNA amplification pass-fail
-      percent_cdna_ longer_than_400bp:
-        description: QC metric to measure mRNA degradation of cDNA.  Higher % is higher
-          quality starting material.  Over 400bp is used as a universal cutoff for
-          intact (full length) vs degraded cDNA and is a common output from Bioanalyzer
-          and Fragment Analyzer elecropheragrams.
-        in_subset:
-        - analysis
-        from_schema: https://identifiers.org/brain-bican/kb-model
-        exact_mappings:
-        - NIMP:PD-JJJJWD35
-        slot_uri: 8d150467-f69e-461c-b54c-bcfd22f581e5
-        alias: amplified cDNA percent cDNA longer than 400bp
-  cDNAAmplification:
-    from_schema: https://identifiers.org/brain-bican/kb-model
-    attributes:
-      pcr_cycles:
-        description: Number of PCR cycles used during cDNA amplification for this
-          cDNA.
-        in_subset:
-        - analysis
-        from_schema: https://identifiers.org/brain-bican/kb-model
-        exact_mappings:
-        - NIMP:PD-OKOKQD38
-        slot_uri: 3827634c-3f8f-4760-b358-86ce4b030238
-        alias: amplified cDNA PCR cycles
-      process_date:
-        description: Date of cDNA amplification.
-        from_schema: https://identifiers.org/brain-bican/kb-model
-        exact_mappings:
-        - NIMP:PD-BYBYBY24
-        slot_uri: 6cc333e7-9b98-497f-b7b1-eae904db2400
-        alias: cDNA amplification process date
-      set:
-        description: cDNA amplification set, containing multiple amplified_cDNA_names
-          that were processed at the same time.
-        in_subset:
-        - analysis
-        from_schema: https://identifiers.org/brain-bican/kb-model
-        exact_mappings:
-        - NIMP:PD-SCSCTM41
-        slot_uri: 42e98a88-50b3-4ea2-871b-2142f6a0dfdd
-        alias: cDNA amplification set
   ProvActivity:
     mixin: true
     description: An activity is something that occurs over a period of time and acts
