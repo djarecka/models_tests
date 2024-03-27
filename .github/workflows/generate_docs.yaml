@@ -34,7 +34,7 @@ jobs:
           cp -r src/docs/* docs/
           touch docs/.nojekyll
           gen-doc -d docs linkml-schema/purple_boxes.yaml
-          ls -l docs
+          #ls -l docs
           mv doscs/index.md docs/index_purple.md
           mv doscs/index_main.md docs/index.md
 
