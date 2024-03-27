@@ -1,3 +1,4 @@
 ## hello
 
-[My model](index_purple.md)
+## [Purple Boxes model](index_purple.md)
+## [GARS model](index_gars.md)

@@ -1,0 +1,150 @@
+id: https://identifiers.org/brain-bican/kb-model
+name: kb-model
+prefixes:
+  linkml: https://w3id.org/linkml/
+  biolink: https://w3id.org/biolink/vocab/
+  bican: https://identifiers.org/brain-bican/vocab/
+  spdx: http://spdx.org/rdf/terms#
+  schema: http://schema.org/
+  ncbi: https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=
+  NCBIAssembly: https://www.ncbi.nlm.nih.gov/assembly/
+  prov: http://www.w3.org/ns/prov#
+
+
+imports:
+  - linkml:types
+default_range: string
+default_prefix: bican
+
+classes:
+  gene annotation:
+    description: >-
+      An annotation describing the location, boundaries, and functions of 
+      individual genes within a genome annotation.
+    slots:
+      - referenced in
+      - molecular type
+      - source id
+    id_prefixes:
+      - ENSEMBL
+      - MGI
+      - NCBIGene
+
+  genome annotation:
+    description: >-
+      Location and nomenclature of genes and all of the coding regions in a genome assembly 
+      and the classification of genes and transcripts into types.
+    slots:
+      - reference assembly
+      - version
+      - digest
+      - content_url
+      - authority
+
+  genome assembly:
+    mixins:
+      - thing with taxon
+    description: >-
+      Genome assembly to contain version and label information
+    slots:
+      - version
+      - strain
+
+
+slots:
+
+  referenced in:
+    range: genome annotation
+
+  molecular type:
+    range: BioType
+
+  reference assembly:
+    range: uriorcurie
+
+  digest:
+    description: Stores checksum information. 
+    range: checksum
+    multivalued: true
+    required: true
+
+  content_url:
+    slot_uri: schema:url
+    multivalued: true
+
+  authority:
+    description: The organization responsible for publishing the data. 
+
+  checksum algorithm:
+    description: The type of cryptographic hash function used to calculate the checksum value.
+    range: DigestType
+
+  source id:
+    description: The authority specific identifier. 
+    slot_uri: schema:identifier
+  
+  strain:
+    description: The genetic variant or subtype of a species or organism. 
+
+  sex:
+    range: SexType  
+  
+  birth date:
+    description: The date of birth of the donor.
+    range: date
+
+  death date:
+    description: The date of death of the donor.
+    range: date
+  
+  death age:
+    description: The age of the donor at the time of death (ISO 8601 format).
+    range: string
+
+  full genotype:  
+    description: The full genotype of the donor.
+    range: string
+
+  method:
+    description: 
+    slot_uri: schema:name
+  
+  input quantity:
+    description: The amount of input material used for an activity. 
+    range: float
+  
+  process pass:
+    description: Indicates whether the process passed or failed. 
+    range: boolean
+  
+  avg size bp:
+    description: The average size (bp = base pairs) of an entity. 
+    range: integer
+
+
+enums:
+  DigestType:
+    permissible_values:
+      SHA1:
+        meaning: spdx:checksumAlgorithm_sha1
+      MD5:
+        meaning: spdx:checksumAlgorithm_md5
+      SHA256:
+        meaning: spdx:checksumAlgorithm_sha256
+
+  SexType:
+    permissible_values:
+      female:
+      male:
+
+  BioType:
+    permissible_values:
+      protein_coding:
+      noncoding:
+
+  TaxonType:
+    permissible_values:
+      mouse:
+        meaning: ncbi:10090
+      human:
+        meaning: ncbi:9606
