@@ -34,8 +34,9 @@ jobs:
           cp -r src/docs/* docs/
           touch docs/.nojekyll
           gen-doc -d docs linkml-schema/purple_boxes.yaml
-          mv doscs/index.html docs/intex_purple.html
-          mv doscs/index_main.html docs/intex.html
+          ls -l docs
+          mv doscs/index.html docs/index_purple.html
+          mv doscs/index_main.html docs/index.html
 
       - name: Deploy to GitHub Pages
         run: mkdocs gh-deploy --force
